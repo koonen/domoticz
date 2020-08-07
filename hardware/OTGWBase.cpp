@@ -216,7 +216,7 @@ bool OTGWBase::SwitchLight(const int idx, const std::string &LCmd, const int /*s
 	return true;
 }
 
-bool OTGWBase::WriteToHardware(const char *pdata, const unsigned char /*length*/)
+ bool OTGWBase::WriteToHardware(const char *pdata, const unsigned char /*length*/)
 {
 	const tRBUF *pSen = reinterpret_cast<const tRBUF*>(pdata);
 
@@ -263,15 +263,30 @@ void OTGWBase::GetVersion()
 	WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
 }
 
-void OTGWBase::GetGatewayDetails()
+void OTGWBase::GetGPIOConfig()
 {
 	char szCmd[30];
 	strcpy(szCmd, "PR=G\r\n");
 	WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
+}
+
+void OTGWBase::GetGPIOState()
+{
+	char szCmd[30];
 	strcpy(szCmd, "PR=I\r\n");
 	WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
+}
+
+void OTGWBase::GetSetpointOverride()
+{
+	char szCmd[30];
 	strcpy(szCmd, "PR=O\r\n");
 	WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
+}
+
+void OTGWBase::GetSummary()
+{
+	char szCmd[30];
 	strcpy(szCmd, "PS=1\r\n");
 	WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
 }
@@ -320,7 +335,7 @@ void OTGWBase::SetSetpoint(const int idx, const float temp)
 		Log(LOG_STATUS, "Setting Room SetPoint to: %.1f", temp);
 		sprintf(szCmd, "TT=%.1f\r\n", temp);
 		WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
-		UpdateSetPointSensor((uint8_t)idx, temp, "Room Setpoint");
+		// UpdateSetPointSensor((uint8_t)idx, temp, "Room Setpoint");
 	}
 	else if (idx == 15)
 	{
@@ -328,7 +343,7 @@ void OTGWBase::SetSetpoint(const int idx, const float temp)
 		Log(LOG_STATUS, "Setting Heating SetPoint to: %.1f", temp);
 		sprintf(szCmd, "SW=%.1f\r\n", temp);
 		WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
-		UpdateSetPointSensor((uint8_t)idx, temp, "DHW Setpoint");
+		// UpdateSetPointSensor((uint8_t)idx, temp, "DHW Setpoint");
 	}
 	else if (idx == 16)
 	{
@@ -336,9 +351,13 @@ void OTGWBase::SetSetpoint(const int idx, const float temp)
 		Log(LOG_STATUS, "Setting Max CH water SetPoint to: %.1f", temp);
 		sprintf(szCmd, "SH=%.1f\r\n", temp);
 		WriteInt((const unsigned char*)&szCmd, (const unsigned char)strlen(szCmd));
-		UpdateSetPointSensor((uint8_t)idx, temp, "Max_CH Water Setpoint");
+		// UpdateSetPointSensor((uint8_t)idx, temp, "Max_CH Water Setpoint");
 	}
-	GetGatewayDetails();
+	// GetGatewayDetails(); 
+	// Just wait for the next update, also remove update of the hw devices; 
+	// This makes the behavior more like zwave devices, which also wait for the hw acknowledge
+	// Note: this can take several seconds. OTGW has to process the command, 
+	// send an update to the thermostat, which has to process it and send an acknowledge back to OTGW. 
 }
 
 void OTGWBase::ParseLine()
