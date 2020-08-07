@@ -147,7 +147,10 @@ void OTGWSerial::Do_Work()
 				bFirstTime = false;
 				SendOutsideTemperature();
 				SendTime();
-				GetGatewayDetails();
+				GetGPIOConfig();
+				GetGPIOState();
+				GetSetpointOverride();
+				GetSummary();
 			}
 		}
 	}

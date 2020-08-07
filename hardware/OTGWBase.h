@@ -54,7 +54,10 @@ protected:
 	void UpdateSwitch(const unsigned char Idx, const bool bOn, const std::string &defaultname);
 	bool GetOutsideTemperatureFromDomoticz(float &tvalue);
 	bool SwitchLight(const int idx, const std::string &LCmd, const int svalue);
-	void GetGatewayDetails();
+	void GetGPIOConfig();
+	void GetGPIOState();
+	void GetSetpointOverride();
+	void GetSummary();
 	void GetVersion();
 	void SendTime();
 	void SendOutsideTemperature();
