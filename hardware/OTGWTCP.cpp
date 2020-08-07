@@ -75,11 +75,29 @@ void OTGWTCP::Do_Work()
 				m_bRequestVersion = false;
 				GetVersion();
 			}
+			else if (sec_counter % 3600 == 29)//update time once per hour 
+			{
+				SendTime();
+			}
 			else if (sec_counter % 30 == 0)//updates every 30 seconds
 			{
 				SendOutsideTemperature();
-				SendTime();
-				GetGatewayDetails();
+			}
+			else if (sec_counter % 30 == 1)//updates every 30 seconds
+			{
+				GetGPIOConfig();
+			}
+			else if (sec_counter % 30 == 2)//updates every 30 seconds
+			{
+				GetGPIOState();
+			}
+			else if (sec_counter % 30 == 3)//updates every 30 seconds
+			{
+				GetSetpointOverride();
+			}
+			else if (sec_counter % 30 == 4)//updates every 30 seconds
+			{
+				GetSummary();
 			}
 		}
 	}

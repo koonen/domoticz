@@ -57,7 +57,10 @@ class OTGWBase : public CDomoticzHardwareBase
 	void UpdateSwitch(unsigned char Idx, bool bOn, const std::string &defaultname);
 	bool GetOutsideTemperatureFromDomoticz(float &tvalue);
 	bool SwitchLight(int idx, const std::string &LCmd, int svalue);
-	void GetGatewayDetails();
+	void GetGPIOConfig();
+	void GetGPIOState();
+	void GetSetpointOverride();
+	void GetSummary();
 	void GetVersion();
 	void SendTime();
 	void SendOutsideTemperature();
