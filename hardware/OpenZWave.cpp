@@ -1335,6 +1335,14 @@ bool COpenZWave::SwitchLight(_tZWaveDevice* pDevice, const int instanceID, const
 			//dimmable/color light  device
 			if ((svalue > 99) && (svalue != 255))
 				svalue = 99;
+			// Special case for Fibaro FGR-223 (Roller Shutter 3) Handle 255 as 99 as  255 means previous position	
+			if ( (pDevice->Manufacturer_id == 0x010F) && (pDevice->Product_id == 0x1000) && (pDevice->Product_type == 0x0303) ) 
+			{
+				if ( svalue == 255 ) 
+				{
+					svalue = 99;
+				}
+			}
 			if (GetValueByCommandClassIndex(pDevice->nodeID, (uint8_t)instanceID, COMMAND_CLASS_SWITCH_MULTILEVEL, ValueID_Index_SwitchMultiLevel::Level, vID) == true)
 			{
 				std::string vLabel = m_pManager->GetValueLabel(vID);
