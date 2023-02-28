@@ -619,6 +619,7 @@
     <Product config="fakro/arz.xml" id="0002" name="ARZ Roof Window Roller Shutter" type="0002"/>
     <Product config="fakro/zws230.xml" id="0005" name="ZWS230 Chain actuator 230VAC" type="0002"/>
     <Product config="fakro/zws12.xml" id="0001" name="ZWS12 Chain actuator 12VDC" type="0003"/>
+    <Product config="fakro/zws12.xml" id="0011" name="ZWS12 Chain actuator 12VDC" type="0002"/>
     <Product config="fakro/zws230.xml" id="0002" name="ZWS230 Chain actuator 230VAC" type="0003"/>
     <Product config="fakro/zwrs.xml" id="0001" name="ZWRS Roller Shutter FLiRS module" type="0016"/>
     <Product config="fakro/arzsolar.xml" id="0012" name="ARZ SOLAR Roof Window Roller Shutter" type="0003"/>
